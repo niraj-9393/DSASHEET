@@ -91,7 +91,7 @@ textarea{
 
 
 .cancel,
-.save{
+#addToSheet{
     border:none;
     padding:10px 18px;
     border-radius:8px;
@@ -112,12 +112,12 @@ textarea{
 }
 
 
-.save{
+#addToSheet{
     background:#ffa116;
     color:black;
 }
 
 
-.save:hover{
+#addToSheet:hover{
     background:#ffb84d;
 }

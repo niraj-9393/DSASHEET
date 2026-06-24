@@ -7,6 +7,16 @@ document.addEventListener("DOMContentLoaded", async() => {
 
     if(!tab.url.startsWith("https://leetcode.com/problems/")){
         document.getElementById("question_link").placeholder = "Open a LeetCode problem first!";
+          const closeBtn = document.getElementById("close");
+    const cancelBtn = document.querySelector(".cancel");
+
+    closeBtn.addEventListener("click", () => {
+        window.close();
+    });
+
+    cancelBtn.addEventListener("click", () => {
+        window.close();
+    });
         return;
     }
     
@@ -30,7 +40,47 @@ document.addEventListener("DOMContentLoaded", async() => {
     })
 
     
-    const difficulty = result[0].result
-    document.getElementById('difficulty').value = difficulty
+    const difficulty = result[0].result;
+    document.getElementById('difficulty').value = difficulty;
+    const remark = document.getElementById('remark');
+    let queRemark ;
+    remark.addEventListener('change',(event)=>{
+      queRemark =  event.target.value
+         console.log(queRemark);
+    })
+   
+    // close extention when click on the close btn and cancel btn
 
+    const closeBtn = document.getElementById("close");
+    const cancelBtn = document.querySelector(".cancel");
+
+    closeBtn.addEventListener("click", () => {
+        window.close();
+    });
+
+    cancelBtn.addEventListener("click", () => {
+        window.close();
+    });
+    const  addToSheetBtn = async()=>{
+        const url = "http://localhost:5000/problem/addtosheet";
+        try {
+            const res = await fetch(url, {
+             method: "POST",
+             headers: {
+        "Content-Type": "application/json"
+    },
+     body: JSON.stringify({
+        name: que_name,
+        link: tab.url,
+        difficulty,
+        remark: queRemark
+    })
+});
+            console.log(res);
+        } catch (error) {
+            
+        }
+    }
+    document.getElementById("addToSheet")
+    .addEventListener("click", addToSheetBtn);
 })
