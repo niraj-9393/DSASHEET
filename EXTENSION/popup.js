@@ -61,26 +61,46 @@ document.addEventListener("DOMContentLoaded", async() => {
     cancelBtn.addEventListener("click", () => {
         window.close();
     });
-    const  addToSheetBtn = async()=>{
-        const url = "http://localhost:5000/problem/addtosheet";
-        try {
-            const res = await fetch(url, {
-             method: "POST",
-             headers: {
-        "Content-Type": "application/json"
-    },
-     body: JSON.stringify({
-        name: que_name,
-        link: tab.url,
-        difficulty,
-        remark: queRemark
-    })
-});
-            console.log(res);
-        } catch (error) {
-            
+   const addBtn = document.getElementById("addToSheet");
+
+const addToSheetBtn = async () => {
+    addBtn.disabled = true;
+    addBtn.textContent = "Adding...";
+
+    const url = "http://localhost:5000/problem/addtosheet";
+
+    try {
+        const res = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: que_name,
+                link: tab.url,
+                difficulty,
+                remark: queRemark
+            })
+        });
+
+        if (res.ok) {
+            addBtn.textContent = "Added";
+        } else {
+            addBtn.textContent = "Failed";
         }
+
+    } catch (error) {
+        console.log(error);
+        addBtn.textContent = "Failed";
     }
+
+    setTimeout(() => {
+        addBtn.disabled = false;
+        addBtn.textContent = "Add to Sheet";
+    }, 1500);
+};
+
+addBtn.addEventListener("click", addToSheetBtn);
     document.getElementById("addToSheet")
     .addEventListener("click", addToSheetBtn);
 })
