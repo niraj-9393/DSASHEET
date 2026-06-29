@@ -12,15 +12,14 @@ export const addToSheet = async (req, res) => {
       });
     }
     //google sheet integration start
-    const spreadsheetId =
-      "1jUVPrDFOAKZwXEf7AdX81-ejsTsrab6n1n7-jwlXrkw";
+   const spreadsheetId = process.env.SPREADSHEET_ID;
 
     const auth = new GoogleAuth({
-      keyFile: "./service-account.json",
-      scopes: [
-        "https://www.googleapis.com/auth/spreadsheets",
-      ],
-    });
+  credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT),
+  scopes: [
+    "https://www.googleapis.com/auth/spreadsheets",
+  ],
+});
 
     const sheets = google.sheets({
       version: "v4",
